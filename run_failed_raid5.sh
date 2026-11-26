@@ -39,6 +39,7 @@ done
 echo "Removing $FAIL_DISK and re-adding to trigger reconstruction..."
 sudo mdadm --manage /dev/md0 --remove "$FAIL_DISK"
 sudo mdadm --manage /dev/md0 --add "$FAIL_DISK"
+sleep 5
 
 for profile in "${PROFILES[@]}"; do
     for i in {1..3}; do
