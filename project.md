@@ -13,6 +13,6 @@ reference raid0 and raid1 benchmarks were taken in a different day from raid5, r
 
 chrony was installed for synchronization.
 
-freeIPA on rocky done
-
-
+freeIPA on rocky done: configured dns server. 
+freeIPA on desktop done.
+need to chose raid level
