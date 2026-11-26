@@ -15,3 +15,4 @@ chrony was installed for synchronization.
 
 freeIPA on rocky done
 
+
