@@ -8,11 +8,11 @@
 ## Phase 1: Infrastructure & Identity Setup (Labs 4–7)
 - [x] **SSH & Machine Access:** Set up SSH keys and `~/.ssh/config` via `ads-entrada` to connect to `rocky` (`10.10.10.3`), `openmediavault` (`10.10.10.4`), and `desktop` (`10.10.10.6`), and access `windows` (`10.10.10.5`) via Proxmox/port 8006.
 - [ ] **Hardware & System Inventory (Report Table):** Document OS versions, DNS settings, CPU/RAM (`nproc`, `free -h`), and system vs. data disks (`lsblk`) for all four VMs.
-- [ ] **NTP & Network Verification:** Verify `chronyc tracking` / `timedatectl` (within Kerberos's 5-minute tolerance) and inter-VM connectivity across all 4 machines.
+- [x] **NTP & Network Verification:** Verify `chronyc tracking` / `timedatectl` (within Kerberos's 5-minute tolerance) and inter-VM connectivity across all 4 machines.
 - [x] **FreeIPA Server (`rocky`):** Install and configure FreeIPA (`GROUP36.LAN`) with LDAP, Kerberos, DNS, and CA, with `SELinux` enforcing.
 - [x] **IPA Client Enrollment (`desktop`):** Join `desktop` to `GROUP36.LAN` using `ipa-client-install` and configure DNS to point to `10.10.10.3`.
-- [ ] **IPA Client Enrollment (`openmediavault`):** Point DNS to `10.10.10.3` and enroll `openmediavault` as an IPA client (`ipa-client-install`).
-- [ ] **Windows Kerberos Integration (`windows`):** Point DNS to `10.10.10.3`, configure `ksetup` for realm `GROUP36.LAN`, and map Kerberos login accounts.
+- [X] **IPA Client Enrollment (`openmediavault`):** Point DNS to `10.10.10.3` and enroll `openmediavault` as an IPA client (`ipa-client-install`).
+- [ ] **Windows Kerberos Integration (`windows`):** Point DNS to `10.10.10.3`, configure `ksetup` for realm `GROUP36.LAN`, and map Kerberos login acco  unts.
 - [x] **Test User Creation:** Create user `ana` (`ipa user-add ana`) and initialize her password on `rocky`.
 
 ---
@@ -21,7 +21,6 @@
 - [x] **UC1 — RAID Benchmarking (`fio`):**
   - [x] Run 3-repetition `fio` benchmarks (`--direct=1`, `seq-read`, `seq-write`, `rand-read`, `rand-write`) across `reference`, `raid0`, `raid1`, `raid5`, `raid6`, `raid10`, `raid5-degraded`, and `raid5-rebuild`.
   - [x] Export the 96 JSON result files to `Very-Tuf` and generate summary tables and plots (MB/s and IOPS).
-  - [ ] *(Optional)* Re-run healthy `raid5` (and high-variance `seq-read` runs) if you want cleaner numbers before finalizing the UC1 comparison.
   - [ ] **Choose & Justify RAID Level:** Select the final RAID level for `openmediavault` based on MB/s, IOPS, usable capacity, fault tolerance, and hypervisor shared-storage analysis.
 - [ ] **UC2 — Disk Failure & Reconstruction:**
   - [ ] Configure `mdadm-monitor` to trigger a local email or script alert on disk failure.
@@ -32,7 +31,7 @@
 
 ## Phase 3: Production Storage, Shares & Automount
 - [ ] **Final RAID & LVM (`openmediavault`):** Build the chosen RAID array (`/dev/md0` + spare if applicable), create volume group `vg_data` and logical volume `lv_homes`, and mount at `/srv/homes`.
-- [ ] **NFSv4 + Kerberos (`openmediavault`):** Export `/srv/homes` to `10.10.10.0/24` with `rw,sec=krb5p,root_squash,no_subtree_check`.
+- [ ] **NFSv4 + Kerberos (`openmediavault`):** Export `/srv/homes` to `10.10.10.0/28` with `rw,sec=krb5p,root_squash,no_subtree_check`.
 - [ ] **SMB3 + Kerberos (`openmediavault`):** Configure Samba to share `/srv/homes` over SMB3 with Kerberos authentication on the same underlying directory.
 - [ ] **FreeIPA Automount Maps (`rocky`):** Configure `auto.master` and `auto.home` maps in FreeIPA so `/home/<user>` mounts automatically from `openmediavault` via NFSv4 (`krb5p`).
 - [ ] **Client Auto-Mounting:**
